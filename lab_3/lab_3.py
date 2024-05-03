@@ -1,3 +1,5 @@
+#ФБ-25 Заєць Микола
+#Лабораторна робота №3
 from spyre import server
 import pandas as pd
 import seaborn as sns
@@ -16,7 +18,7 @@ class StockExample(server.App):
     title = "data vizualization"
     inputs = [{
         'type': 'dropdown',
-        'label': 'NOAA data dropdown',
+        'label': 'Індекси',
         'options': [
             {'label': 'VCI', 'value': 'VCI'},
             {'label': 'TCI', 'value': 'TCI'},
@@ -103,7 +105,7 @@ class StockExample(server.App):
         weeks = params['weeks']
         year = int(params['year'])
 
-        df_all = read_csv_data(r'C:\Users\ethan\OneDrive\Desktop\Subjects\2_semester\data_analysys\lab_2\csv_lab2\ALL_CSV.csv')
+        df_all = read_csv_data(r'C:\Users\ethan\OneDrive\Desktop\Subjects\2_semester\data_analysys\lab_2\csv_lab2\NOAA_ALL_CSV.csv')
         min_week, max_week = map(int, weeks.split("-"))
         df = df_all[(df_all['area'] == region) &
                     (df_all['Year'] == year) &
@@ -126,4 +128,4 @@ class StockExample(server.App):
 
 if __name__ == '__main__':
     app = StockExample()
-    app.launch(port=7373)
+    app.launch(port=7474)
