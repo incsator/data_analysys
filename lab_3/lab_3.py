@@ -1,5 +1,6 @@
 #ФБ-25 Заєць Микола
 #Лабораторна робота №3
+
 from spyre import server
 import pandas as pd
 import seaborn as sns
