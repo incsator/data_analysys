@@ -5,7 +5,6 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-
 def read_csv_data(file_name):
     headers = ['Year', 'Week', 'SMN', 'SMT', 'VCI', 'TCI', 'VHI', 'area']
     df_all = pd.read_csv(file_name, header=1, names=headers, delimiter=',')
