@@ -70,14 +70,23 @@ class StockExample(server.App):
             "value": "9-50",
             "action_id": "update_data"
         },
+
         {
-            "type":'slider',
-            "label": 'Рік:',
-            "min" : 1981,
-            "max" : 2024,
-            "key": 'year',
-            "action_id" : "update_data"
+            "type": "text",
+            "label": "Інтервал років:",
+            "key": "year",
+            "value": "2004-2006",
+            "action_id": "update_data"
         },
+
+        # {
+        #     "type":'slider',
+        #     "label": 'Рік:',
+        #     "min" : 1981,
+        #     "max" : 2024,
+        #     "key": 'year',
+        #     "action_id" : "update_data"
+        # },
     ]
 
     controls = [{"type": "hidden",
@@ -103,12 +112,14 @@ class StockExample(server.App):
         noaa = params['noaa']
         region = int(params['regions'])
         weeks = params['weeks']
-        year = int(params['year'])
+        year = params['year']
 
         df_all = read_csv_data(r'C:\Users\ethan\OneDrive\Desktop\Subjects\2_semester\data_analysys\lab_2\csv_lab2\NOAA_ALL_CSV.csv')
         min_week, max_week = map(int, weeks.split("-"))
+        year_min, year_max = map(int, year.split("-"))
         df = df_all[(df_all['area'] == region) &
-                    (df_all['Year'] == year) &
+                    (df_all['Year'] >= year_min) &
+                    (df_all['Year'] <= year_max) &
                     (df_all['Week'] >= min_week) &
                     (df_all['Week'] <= max_week)][['Year',  'Week', noaa]]
         return df
@@ -116,14 +127,15 @@ class StockExample(server.App):
     def getPlot(self, params):
         noaa = params['noaa']
         data = self.getData(params)
-        df = data.drop(columns=['Year'], axis=1)
 
         plt.figure(figsize=(9, 5))
         sns.set_style("whitegrid")
         with sns.color_palette("Set2"):
-            fig = sns.lineplot(data=df, x='Week', y=noaa, zorder=1)
+            for i in data['Year'].unique():
+                data2 = data[data['Year'].astype(int) == int(i)]
+                print(data2)
+                fig = sns.lineplot(data=data2, x='Week', y=noaa, zorder=1)
 
-        plt.scatter(df['Week'], df[noaa], marker='.', s=50, zorder=2)
         return fig
 
 if __name__ == '__main__':
