@@ -1,2 +1,4 @@
 *.csv
 lab_2\.ipynb_checkpoints
+*.txt
+*.data
