@@ -1,0 +1,4 @@
+*.csv
+lab_2\.ipynb_checkpoints
+*.txt
+lab_4/household_power_consumption.txt
